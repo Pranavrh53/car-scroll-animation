@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050510;
+  --foreground: #ededed;
+  --neon-cyan: #00e5ff;
+  --neon-purple: #7b2ff7;
+  --neon-red: #ff4466;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+/* GPU acceleration hints */
+.hero-section,
+.hero-section * {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.hero-section .star,
+.hero-section .smoke-letter,
+.hero-section .smoke-p,
+.hero-section .shooting-star {
+  will-change: transform, opacity;
+  contain: layout style;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #050510;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-cyan), var(--neon-purple));
+  border-radius: 2px;
+}
+
+/* Star twinkle */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.7; }
+}
+
+/* Exhaust flicker */
+@keyframes flicker {
+  0% { transform: scaleX(1) scaleY(1); opacity: 0.9; }
+  33% { transform: scaleX(1.08) scaleY(1.04); opacity: 1; }
+  66% { transform: scaleX(0.96) scaleY(1.02); opacity: 0.92; }
+  100% { transform: scaleX(1.03) scaleY(0.97); opacity: 0.88; }
+}
+
+/* Smoke drift */
+@keyframes smokeDrift {
+  0% { transform: translateY(0) scale(1); opacity: 0.15; }
+  25% { transform: translateY(8px) scale(1.2); opacity: 0.12; }
+  50% { transform: translateY(18px) scale(1.5); opacity: 0.08; }
+  75% { transform: translateY(30px) scale(1.8); opacity: 0.03; }
+  100% { transform: translateY(42px) scale(2.2); opacity: 0; }
+}
+
+/* Scroll indicator bounce */
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  50% { transform: translateX(-50%) translateY(12px); opacity: 0.3; }
+}
+
+/* Selection color */
+::selection {
+  background: rgba(0, 229, 255, 0.2);
+  color: #fff;
 }
